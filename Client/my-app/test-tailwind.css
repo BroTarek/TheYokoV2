@@ -1,0 +1,2 @@
+@import "tailwindcss";
+.test { @apply text-red-500; }

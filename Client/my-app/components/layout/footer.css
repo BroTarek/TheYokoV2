@@ -1,0 +1,25 @@
+/* Footer.css - Premium Specific Styles */
+
+.footer-logo-dot {
+    color: var(--color-kaizen-red);
+}
+
+.footer-newsletter-input::placeholder {
+    color: var(--color-secondary-grey);
+    opacity: 0.6;
+}
+
+/* Custom smooth transitions for the footer */
+footer a, footer button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure icons have proper sizing and centering */
+.footer-social-link svg {
+    display: inline-block;
+}
+
+/* Match the exact automotive kaizen sub-branding typography */
+.kaizen-subtitle {
+    letter-spacing: 0.3em;
+}
