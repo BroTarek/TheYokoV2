@@ -1,5 +1,5 @@
-# Use Node 18 as base
-FROM node:18-slim
+# Use Node 20 as base
+FROM node:20-slim
 
 # Set working directory
 WORKDIR /app
