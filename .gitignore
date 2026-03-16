@@ -60,4 +60,4 @@ Client/my-app/*.log
 Client/my-app/globals.out.css
 Client/my-app/test-tailwind.out.css
 
-cloudflared.exe
+cloudflared.execloudflared.exe
