@@ -1,0 +1,13 @@
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=3000
+    restart: always
+
+# You can add the client service here later if you want to containerize the frontend too

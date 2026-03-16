@@ -2,9 +2,9 @@
 node_modules/
 /.pnp
 .pnp.js
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# package-lock.json removed to allow consistent builds on Hostinger
+# yarn.lock
+# pnpm-lock.yaml
 
 # Next.js build output - BE MORE AGGRESSIVE
 .next/
