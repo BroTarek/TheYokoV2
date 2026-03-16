@@ -7,7 +7,7 @@ import {
     deleteJobRequirement
 } from '../api';
 import { jobRequirementKeys } from '../keys';
-import { JobRequirement } from '@/utils/schema';
+import { JobRequirement } from '@/utils/schemas';
 
 // 1. Hook for fetching all Job Requirements
 export const useJobRequirements = (filters = {}) => {

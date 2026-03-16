@@ -1,0 +1,55 @@
+﻿app/Archive/Applicants/_components/ArchivedApplicantCard.tsx(5,27): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/DataTableServer.tsx(1,39): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/redux/slices/ActionsSlice/ActionsSlice.ts(5,47): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/redux/slices/ActionsSlice/useActions.ts(9,27): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableBody/DataTableBody.tsx(2,39): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableBody/TableBodyComponents/ColumnsDropdown.tsx(5,27): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableBody/TableBodyComponents/ControlBar.tsx(10,27): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableBody/TableBodyComponents/FilterSelect.tsx(1,27): error TS2307: Cannot find module '@/app/(Components)/GenericSelect' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableBody/TableBodyComponents/MainTableContent.tsx(5,39): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableBody/TableBodyComponents/PaginationFooter.tsx(6,39): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableBody/TableBodyComponents/TableContent.tsx(9,39): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableBody/TableBodyComponents/TabsController.tsx(4,27): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableColumns/CellComponents.tsx(12,27): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableColumns/ColumnsFactory.tsx(2,27): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableColumns/HeaderComponents.tsx(6,27): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableUtils/createReactTable.ts(3,39): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+app/dashboard/(Components)/demo/DataTable/TableUtils/useReactTableUtils.ts(7,39): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+app/Portofolio/page.tsx(26,27): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/Topics/[TopicName]/[CompanyName]/page.tsx(3,36): error TS2307: Cannot find module '@/components/data-tables/data-table-body/ApplicantDataTable' or its corresponding type declarations.
+app/Topics/[TopicName]/[CompanyName]/page.tsx(39,28): error TS2339: Property 'fields' does not exist on type '{ data: JobField[]; pagination: pagination; }'.
+app/Topics/[TopicName]/[CompanyName]/page.tsx(57,38): error TS2339: Property 'meta' does not exist on type '{ applicants: any[]; pagination: pagination; }'.
+app/Topics/[TopicName]/[CompanyName]/page.tsx(247,63): error TS7031: Binding element 'p' implicitly has an 'any' type.
+app/Topics/[TopicName]/[CompanyName]/page.tsx(247,76): error TS7031: Binding element 's' implicitly has an 'any' type.
+app/Topics/[TopicName]/page.tsx(13,25): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+app/Topics/[TopicName]/page.tsx(114,21): error TS2322: Type 'jobTitle[]' is not assignable to type 'import("D:/RecruitmentAgency/Client/my-app/app/Topics/[TopicName]/(Components)/types").jobTitle[]'.
+  Type 'jobTitle' is not assignable to type 'import("D:/RecruitmentAgency/Client/my-app/app/Topics/[TopicName]/(Components)/types").jobTitle'.
+    Types of property '_field' are incompatible.
+      Type 'Field' is missing the following properties from type 'Field': _name, _id
+components/forms/form-fields/position-select.tsx(50,37): error TS7006: Parameter 'p' implicitly has an 'any' type.
+components/forms/form-fields/position-select.tsx(56,27): error TS7006: Parameter 'p' implicitly has an 'any' type.
+components/forms/form-fields/position-select.tsx(106,23): error TS7006: Parameter 'position' implicitly has an 'any' type.
+components/forms/form-fields/position-select.tsx(112,14): error TS7006: Parameter 'position' implicitly has an 'any' type.
+components/forms/form-fields/position-select.tsx(236,65): error TS7006: Parameter 'position' implicitly has an 'any' type.
+features/applicants/api/index.ts(2,39): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+features/applicants/hooks/request.ts(2,36): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+features/companies/api/index.ts(3,52): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+features/companies/hooks/index.ts(12,25): error TS2307: Cannot find module '../../../../../utils/schemas' or its corresponding type declarations.
+features/companies/keys.ts(1,28): error TS2307: Cannot find module '../../../../utils/queryKeys' or its corresponding type declarations.
+features/fields/api/index.ts(2,38): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+features/fields/api/request.ts(2,27): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+features/fields/keys.ts(1,28): error TS2307: Cannot find module '../../../../utils/queryKeys' or its corresponding type declarations.
+features/jobRequirments/api/index.ts(2,44): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+features/jobRequirments/api/request.ts(2,36): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+features/jobRequirments/hooks/index.ts(10,32): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+features/jobRequirments/keys.ts(1,28): error TS2307: Cannot find module '../../../../utils/queryKeys' or its corresponding type declarations.
+features/referralSources/api/index.ts(2,32): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+features/referralSources/api/index.ts(3,28): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+features/regions/api/index.ts(1,31): error TS2307: Cannot find module '../../../../../utils/axios' or its corresponding type declarations.
+features/regions/api/index.ts(2,24): error TS2307: Cannot find module '@/utils/schemasss' or its corresponding type declarations.
+features/regions/api/index.ts(3,28): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+features/titles/api/index.ts(1,31): error TS2307: Cannot find module '../../../../../utils/axios' or its corresponding type declarations.
+features/titles/api/index.ts(2,38): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+features/titles/api/request.ts(2,46): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+features/titles/hooks/index.ts(11,26): error TS2307: Cannot find module '@/utils/schemass' or its corresponding type declarations.
+features/titles/keys.ts(1,28): error TS2307: Cannot find module '../../../../utils/queryKeys' or its corresponding type declarations.

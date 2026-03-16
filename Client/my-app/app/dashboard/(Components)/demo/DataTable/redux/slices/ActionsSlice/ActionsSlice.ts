@@ -2,9 +2,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '../../store';
-import { Applicant, JobField, JobTitle } from '@/utils/schema';
-import { useField } from '@/features/fields/hooks';
-import { useTitle } from '@/features/titles/hooks';
+import { Applicant, JobField, JobTitle } from '@/utils/schemas';
 
 import { ColumnFiltersState, PaginationState, SortingState, VisibilityState,RowSelectionState } from '@tanstack/react-table';
 
@@ -28,9 +26,9 @@ const initialState: initialStateType = {
     name: ""
   },
   jobTitle: {
-    fieldId: "",
     id: "",
-    title: ""
+    title: "",
+    name:""
   },
   isArchiveTogglePending: false,
   isDeleting: false,
@@ -47,16 +45,14 @@ export const dataTableSlice = createSlice({
     setColumnFilters: () => { },
     setPaginationState: () => { },
     getjobTitleById: (state,
-      action: PayloadAction<{ id: string }>
+      action: PayloadAction<JobTitle>
     ) => {
-      const jobTitle = useTitle(action.payload.id)
-      state.jobTitle = jobTitle.data as JobTitle
+      state.jobTitle = action.payload;
     },
     getjobFieldById: (state,
-      action: PayloadAction<{ id: string }>
+      action: PayloadAction<JobField>
     ) => {
-      const jobField = useField(action.payload.id)
-      state.jobField = jobField.data as JobField
+      state.jobField = action.payload;
     },
     onArchiveToggle: (state, action: PayloadAction<{ id: string, currentlyArchived: boolean }>) => { },
     onDeleteClick: (state, action: PayloadAction<{ id: string }>) => { },

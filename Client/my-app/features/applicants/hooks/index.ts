@@ -12,7 +12,7 @@ import {
 import { applicantKeys } from '../keys';
 
 
-// import { Applicant } from '../../../utils/schemas';
+// import { Applicant } from '../../../utils/schemass';
 
 // 1. Hook for fetching all Applicants
 export const useApplicants = (filters: ApplicantParams) => {

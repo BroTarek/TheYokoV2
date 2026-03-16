@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/utils/axios";
-import {  JobField } from "@/utils/schema";
+import {  JobField } from "@/utils/schemas";
 import { ZodSchema } from "zod";
 
 

@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/utils/axios";
-import { Company, Applicant } from "@/utils/schema";
+import { Company, Applicant } from "@/utils/schemas";
 import { ZodSchema } from "zod";
 
 type ApplicantParams = Omit<Applicant, "firstName"|"lastName" |"phone"| "email"|"lastCompany"|"googleDriveUrl"|"updatedAt"|"experienceDescription"

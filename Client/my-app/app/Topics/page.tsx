@@ -5,35 +5,24 @@ import { Plus, Users, LayoutGrid, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useMemo, useState, useEffect } from 'react'
 import { da } from 'zod/v4/locales'
+import { useFields } from '@/features/fields/hooks'
+import { JobField } from '@/utils/schemas'
 
 const TopicsPage = () => {
-    const [topics, setTopics] = useState<any[]>([])
-    const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await fetch('http://localhost:3000/api/fields')
-                const data = await res.json()
-                console.log(data.fields)
-                setTopics(data.fields)
-            } catch (error) {
-                console.error("Failed to fetch data:", error)
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchData()
-    }, [])
+    const { data, isLoading } = useFields({})
+
+    const topics = data?.data as JobField[] | undefined;
 
     const topicStats = useMemo(() => {
+        if (!topics || !Array.isArray(topics)) return [];
         return topics.map(topic => ({
             name: topic.name,
-            id:topic.name
+            id: topic.name
         }))
     }, [topics])
 
-    if (loading) {
+    if (isLoading) {
         return <div className="p-10 text-center text-lg">Loading topics...</div>
     }
 
@@ -46,10 +35,10 @@ const TopicsPage = () => {
                         Discover specialized fields and talent distribution across the platform. Click on a topic to explore specific companies and opportunities.
                     </p>
                 </div>
-                <Button className="rounded-2xl px-8 py-7 h-auto font-bold bg-primary text-primary-foreground shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
+                {/* <Button className="rounded-2xl px-8 py-7 h-auto font-bold bg-primary text-primary-foreground shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
                     <Plus className="w-6 h-6 mr-2" />
                     New Field
-                </Button>
+                </Button> */}
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

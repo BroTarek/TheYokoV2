@@ -1,0 +1,45 @@
+﻿
+> react-query@1.0.0 build
+> next build
+
+ظû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+ظ£ô Compiled successfully in 4.0s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/8) ...
+node.exe : Error occurred prerendering page "/dashboard". Read more: 
+https://nextjs.org/docs/messages/prerender-error
+At C:\Program Files\nodejs\npm.ps1:29 char:3
++   & $NODE_EXE $NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error occurred ...prerender-error:String) [],  
+   RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Error: Invalid hook call. Hooks can only be called inside of the body of a function 
+component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this 
+problem.
+    at <unknown> 
+(D:\RecruitmentAgency\Client\my-app\.next\server\chunks\ssr\_24453dd3._.js:4:113492)
+    at c 
+(D:\RecruitmentAgency\Client\my-app\.next\server\chunks\ssr\_24453dd3._.js:4:113579)
+    at c 
+(D:\RecruitmentAgency\Client\my-app\.next\server\chunks\ssr\_24453dd3._.js:4:113695)
+    at f5 
+(D:\RecruitmentAgency\Client\my-app\.next\server\chunks\ssr\_24453dd3._.js:4:135054)
+    at module evaluation 
+(D:\RecruitmentAgency\Client\my-app\.next\server\chunks\ssr\_24453dd3._.js:4:140997)
+    at instantiateModule 
+(D:\RecruitmentAgency\Client\my-app\.next\server\chunks\ssr\[turbopack]_runtime.js:740:9)
+    at getOrInstantiateModuleFromParent 
+(D:\RecruitmentAgency\Client\my-app\.next\server\chunks\ssr\[turbopack]_runtime.js:763:12) {
+  digest: '2349555541'
+}
+Export encountered an error on /dashboard/page: /dashboard, exiting the build.
+ظذ» Next.js build worker exited with code: 1 and signal: null

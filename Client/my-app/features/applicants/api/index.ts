@@ -1,38 +1,39 @@
-import { axiosInstance } from '../../../../../utils/axios';
-import { Applicant, pagination } from '@/utils/schema';
+import { axiosInstance } from '@/utils/axios';
+import { Applicant, pagination } from '@/utils/schemas';
 
 export type ApplicantParams = Partial<Omit<Applicant, "firstName" | "lastName" | "phone" | "email" | "lastCompany" | "googleDriveUrl" | "updatedAt" | "experienceDescription" | "applicationDate" | "id">> & {
     page?: number;
     limit?: number;
     sort?: string;
     keyword?: string;
+    populate?: boolean;
 };
 
 
 export const fetchApplicants = async (filters: ApplicantParams): Promise<{
-    applicants: Applicant[]
+    applicants: any[]
     pagination: pagination,
 }> => {
-    const { data: { data, pagination } } = await axiosInstance.get('/applicants', { params: filters });
+    const { data: { data, pagination } } = await axiosInstance.get('/applicants', { params: { populate: true, ...filters } });
     return { applicants: data, pagination };
 };
 
-export const fetchApplicantById = async (id: string): Promise<Applicant> => {
-    const { data: { data } } = await axiosInstance.get(`/applicants/${id}`);
+export const fetchApplicantById = async (id: string): Promise<any> => {
+    const { data: { data } } = await axiosInstance.get(`/applicants/${id}`, { params: { populate: true } });
     return data;
 };
 
-export const createApplicant = async (newApplicant: Applicant): Promise<Applicant> => {
-    const { data: { data } } = await axiosInstance.post('/applicants', newApplicant);
+export const createApplicant = async (newApplicant: any): Promise<any> => {
+    const { data: { data } } = await axiosInstance.post('/applicants?populate=true', newApplicant);
     return data;
 };
 
-export const updateApplicant = async ({ id, ...updates }: { id: string } & Partial<Applicant>): Promise<Applicant> => {
-    const { data: { data } } = await axiosInstance.patch(`/applicants/${id}`, updates);
+export const updateApplicant = async ({ id, ...updates }: { id: string } & Partial<any>): Promise<any> => {
+    const { data: { data } } = await axiosInstance.patch(`/applicants/${id}?populate=true`, updates);
     return data;
 };
 
-export const deleteApplicant = async (id: string): Promise<Applicant> => {
+export const deleteApplicant = async (id: string): Promise<any> => {
     const { data } = await axiosInstance.delete(`/applicants/${id}`);
     return data;
 };

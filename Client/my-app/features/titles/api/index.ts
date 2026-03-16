@@ -1,5 +1,5 @@
-import { axiosInstance } from '../../../../../utils/axios';
-import { JobTitle, pagination } from "@/utils/schema"
+import { axiosInstance } from '@/utils/axios';
+import { JobTitle, pagination } from "@/utils/schemas"
 
 export const fetchTitles = async (params = {}): Promise<{
     data: JobTitle[],

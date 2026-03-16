@@ -10,22 +10,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-
-// Default options
-export const REFERRAL_SOURCES = [
-  {
-    id: "80f11344-73d6-43f2-a9a3-aeef9d206eab",
-    label: "LinkedIn"
-  },
-  {
-    id: "edb9bf46-bf7c-4e87-bd5f-4434a0144945",
-    label: "Facebook"
-  },
-  {
-    id: "22cb9919-c2cc-40d7-b7b4-184a78bf346b",
-    label: "Indeed"
-  }
-];
+import { useQuery } from "@tanstack/react-query";
+import { fetchReferralSources } from "@/features/referralSources/api";
+import { ReferralSource } from "@/utils/schemas";
 
 interface ReferralSourceSelectProps {
   value?: string;
@@ -49,6 +36,13 @@ export function ReferralSourceSelect({
   const [showOtherInput, setShowOtherInput] = React.useState(false);
   const [otherValue, setOtherValue] = React.useState("");
 
+  const { data: referralSourcesData, isLoading } = useQuery({
+    queryKey: ["referralSources"],
+    queryFn: () => fetchReferralSources(),
+  });
+
+  const sources: ReferralSource[] = referralSourcesData?.data ?? [];
+
   const handleSelect = (id: string) => {
     if (id === "other") {
       setShowOtherInput(true);
@@ -56,9 +50,9 @@ export function ReferralSourceSelect({
     }
 
     onChange?.(id);
-    const selectedSource = REFERRAL_SOURCES.find(s => s.id === id);
+    const selectedSource = sources.find(s => s.id === id);
     if (selectedSource) {
-      onLabelChange?.(selectedSource.label);
+      onLabelChange?.(selectedSource.name);
     }
     setOpen(false);
     setSearch("");
@@ -82,19 +76,19 @@ export function ReferralSourceSelect({
     setOtherValue("");
   };
 
-  const filteredSources = REFERRAL_SOURCES.filter((source) =>
-    source.label.toLowerCase().includes(search.toLowerCase())
+  const filteredSources = sources.filter((source) =>
+    source.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const hasExactMatch = REFERRAL_SOURCES.some(
-    (source) => source.label.toLowerCase() === search.toLowerCase()
+  const hasExactMatch = sources.some(
+    (source) => source.name.toLowerCase() === search.toLowerCase()
   );
 
-  const isCustomValue = value && !REFERRAL_SOURCES.some((source) => source.id === value);
+  const isCustomValue = value && !sources.some((source) => source.id === value);
 
   const getLabelById = (id: string) => {
-    const source = REFERRAL_SOURCES.find((s) => s.id === id);
-    return source ? source.label : id;
+    const source = sources.find((s) => s.id === id);
+    return source ? source.name : id;
   };
 
   const displayValue = value ? getLabelById(value) : "";
@@ -208,7 +202,9 @@ export function ReferralSourceSelect({
 
               {/* Options list */}
               <div className="max-h-[280px] overflow-y-auto py-1">
-                {filteredSources.length > 0 && (
+                {isLoading ? (
+                  <div className="px-4 py-3 text-sm text-gray-400 text-center">Loading...</div>
+                ) : filteredSources.length > 0 ? (
                   <div className="px-1">
                     {filteredSources.map((source) => (
                       <button
@@ -221,27 +217,26 @@ export function ReferralSourceSelect({
                           value === source.id && "bg-red-50 text-kaizen-red font-medium"
                         )}
                       >
-                        {source.label}
+                        {source.name}
                       </button>
                     ))}
                   </div>
-                )}
-
-                {/* Show "Other" button when no exact match */}
-                {search.trim() && !hasExactMatch && filteredSources.length === 0 && (
-                  <div className="px-4 py-3 border-t border-gray-100">
-                    <div className="space-y-3">
-                      <p className="text-sm text-gray-500 text-center">
-                        No matching option found.
-                      </p>
-                      <button
-                        onClick={() => setShowOtherInput(true)}
-                        className="w-full text-center py-2 px-3 rounded-md border border-kaizen-red/20 text-kaizen-red hover:bg-red-50 transition-colors duration-150"
-                      >
-                        + Add "{search}" as custom option
-                      </button>
+                ) : (
+                  search.trim() && !hasExactMatch && (
+                    <div className="px-4 py-3 border-t border-gray-100">
+                      <div className="space-y-3">
+                        <p className="text-sm text-gray-500 text-center">
+                          No matching option found.
+                        </p>
+                        <button
+                          onClick={() => setShowOtherInput(true)}
+                          className="w-full text-center py-2 px-3 rounded-md border border-kaizen-red/20 text-kaizen-red hover:bg-red-50 transition-colors duration-150"
+                        >
+                          + Add &quot;{search}&quot; as custom option
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )
                 )}
 
                 {/* Always show "Other" option */}

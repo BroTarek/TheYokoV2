@@ -1,6 +1,7 @@
-import GenericSelect from "@/app/(Components)/GenericSelect";
+import React from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export const FilterSelect = <T,>({ 
+export const FilterSelect = <T extends string>({ 
     label, 
     options, 
     value, 
@@ -15,14 +16,19 @@ export const FilterSelect = <T,>({
     placeholder: string;
     renderOption?: (option: any, isSelected: boolean) => React.ReactNode;
 }) => (
-    <GenericSelect
-        label={label}
-        options={options}
-        value={value}
-        onValueChange={onChange}
-        placeholder={placeholder}
-        className="w-full lg:w-auto"
-        triggerClassName="w-full lg:w-48"
-        renderOption={renderOption}
-    />
+    <div className="flex flex-col gap-1.5 w-full lg:w-auto">
+        {label && <span className="text-sm font-medium text-gray-700">{label}</span>}
+        <Select value={value} onValueChange={onChange}>
+            <SelectTrigger className="w-full lg:w-48 bg-white">
+                <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+            <SelectContent>
+                {options.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                        {renderOption ? renderOption(option, value === option.value) : option.label}
+                    </SelectItem>
+                ))}
+            </SelectContent>
+        </Select>
+    </div>
 );

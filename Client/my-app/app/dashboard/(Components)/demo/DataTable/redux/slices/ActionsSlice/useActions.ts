@@ -6,7 +6,7 @@ import {
   getjobFieldById,
   getjobTitleById, dataTableSlice, onArchiveToggle, onDeleteClick, onStatusChange
 } from './ActionsSlice';
-import { Applicant } from '@/utils/schema';
+import { Applicant } from '@/utils/schemas';
 
 interface UseTodosOptions {
   autoFetch?: boolean;
@@ -52,21 +52,6 @@ export const useDataTable = (options: UseTodosOptions = {}) => {
     [dispatch]
   );
 
-  const jobTitleByIdGetter = useCallback(
-    (id: string) => {
-      dispatch(getjobTitleById({ id }));
-    },
-    [dispatch]
-  );
-
-
-  const jobFieldByIdGetter = useCallback(
-    (id: string) => {
-      dispatch(getjobFieldById({ id }));
-    },
-    [dispatch]
-  );
-
   // const resetFilters = useCallback(() => {
   //   dispatch(clearFilters());
   // }, [dispatch]);
@@ -92,8 +77,7 @@ export const useDataTable = (options: UseTodosOptions = {}) => {
 
   return {
     dataTable,
-    jobFieldByIdGetter,
     ArchiveToggle,
-    DeleteUser, StatusChange, jobTitleByIdGetter,
+    DeleteUser, StatusChange,
   };
 };

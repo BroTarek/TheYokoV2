@@ -1,6 +1,6 @@
 "use client"
 import { useParams } from 'next/navigation'
-import { ApplicantDataTable } from '@/components/data-tables/data-table-body/ApplicantDataTable'
+import DataTableClient from '@/app/dashboard/(Components)/demo/DataTable/DataTableClient'
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
@@ -36,7 +36,7 @@ const CompanyDetailPage = () => {
     }, [companiesData, companyName])
 
     const fieldId = useMemo(() => {
-        return fieldsData?.fields?.find(
+        return fieldsData?.data?.find(
             (f: any) => f.name.toLowerCase() === topicName.toLowerCase()
         )?.id || null
     }, [fieldsData, topicName])
@@ -54,12 +54,12 @@ const CompanyDetailPage = () => {
     const { data: applicantsResponse, isLoading: applicantsLoading } = useApplicants(queryParams)
 
     const applicants = applicantsResponse?.applicants || []
-    const meta = applicantsResponse?.meta
+    const meta = applicantsResponse?.pagination
 
     // Sync pagination state from server
     useEffect(() => {
         if (meta) {
-            setPageIndex(meta.page - 1)
+            setPageIndex(meta.currentPage - 1)
             setPageSize(meta.limit)
         }
     }, [meta])
@@ -100,7 +100,7 @@ const CompanyDetailPage = () => {
         )
     }
 
-    const finalCompany = companyDetails?.company || companiesData?.companies?.find(
+    const finalCompany = companyDetails?.data || companiesData?.companies?.find(
         (c: any) => c.name.toLowerCase() === companyName.toLowerCase()
     )
 
@@ -130,7 +130,7 @@ const CompanyDetailPage = () => {
                                 </Badge>
                                 <div className="flex items-center gap-2 bg-gray-100 text-secondary-grey px-4 py-1.5 rounded-full text-sm font-bold">
                                     <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                                    {(meta?.total || 0) > 0 ? 'Active Recruitment' : 'Monitoring'}
+                                    {(meta?.totalCount || 0) > 0 ? 'Active Recruitment' : 'Monitoring'}
                                 </div>
                             </div>
                         </div>
@@ -143,7 +143,7 @@ const CompanyDetailPage = () => {
                         </div>
                         <div className="bg-white px-8 py-4 rounded-3xl border border-gray-100 shadow-lg shadow-gray-100/50 flex flex-col items-center min-w-30">
                             <span className="text-[10px] text-secondary-grey font-black uppercase tracking-[0.2em] mb-1">Total Applicants</span>
-                            <span className="text-3xl font-black text-kaizen-red font-space-grotesk">{meta?.total || 0}</span>
+                            <span className="text-3xl font-black text-kaizen-red font-space-grotesk">{meta?.totalCount || 0}</span>
                         </div>
                     </div>
                 </div>
@@ -220,7 +220,7 @@ const CompanyDetailPage = () => {
                     <h2 className="text-2xl font-bold text-[#1c213e] font-space-grotesk flex items-center gap-3">
                         Talent Roster
                         <span className="text-sm font-medium text-secondary-grey bg-gray-50 px-3 py-1 rounded-lg border border-gray-100">
-                            {meta?.total || 0} Total Matches
+                            {meta?.totalCount || 0} Total Matches
                         </span>
                     </h2>
                 </div>
@@ -236,18 +236,7 @@ const CompanyDetailPage = () => {
                         </div>
                     </div>
                     <div className="p-2">
-                        <ApplicantDataTable
-                            data={applicants}
-                            meta={meta}
-                            fieldFilter={fieldId || 'all'}
-                            onFieldChange={() => { }} // Disabled as we are in a specific field
-                            selectedExperience={experienceFilter}
-                            onExperienceChange={setExperienceFilter}
-                            pagination={{ pageIndex, pageSize }}
-                            onPaginationChange={({ pageIndex: p, pageSize: s }) => {
-                                setPageIndex(p)
-                                setPageSize(s)
-                            }}
+                        <DataTableClient
                         />
                     </div>
                 </div>

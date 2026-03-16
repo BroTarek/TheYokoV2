@@ -4,7 +4,7 @@ getFacetedRowModel,
 getFacetedUniqueValues,
 Row, } from "@tanstack/react-table"
 import { useOperations } from "../redux/slices/OperationsSlice/useOperations"
-import { Applicant, pagination } from "@/utils/schema"
+import { Applicant, pagination } from "@/utils/schemas"
 
 export const useReactTableUtils=(meta?: pagination)=>{
    const {ColumnFiltersChange,ColumnVisibilityChange,PaginationChange,RowSelectionChange,SortingChange,dataTableOperations}=useOperations()    

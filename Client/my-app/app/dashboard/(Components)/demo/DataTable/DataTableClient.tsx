@@ -1,3 +1,4 @@
+"use client"
 import { useApplicants } from '@/features/applicants/hooks';
 import DataTableServer from './DataTableServer';
 import { ReduxProvider } from './redux/provider';

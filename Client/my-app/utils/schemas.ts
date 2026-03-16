@@ -53,10 +53,20 @@ export const ApplicantSchema = z.object({
     jobField: JobFieldSchema.optional().nullable(),
     jobTitle: JobTitleSchema.optional().nullable(),
     desiredRegions: z.array(RegionSchema).optional(),
+    regions: z.array(RegionSchema).optional(),
     status: ApplicantStatusSchema.optional(),
     isArchived: z.boolean().optional(),
     createdAt: z.string().or(z.date()).optional(),
 });
+
+export const PaginationSchema = z.object({
+    currentPage: z.number(),
+    limit: z.number(),
+    numberOfPages: z.number(),
+    totalCount: z.number(),
+});
+
+export type pagination = z.infer<typeof PaginationSchema>;
 
 export type Company = z.infer<typeof CompanySchema>;
 export type Applicant = z.infer<typeof ApplicantSchema>;

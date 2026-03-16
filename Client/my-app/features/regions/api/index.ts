@@ -1,6 +1,6 @@
-import { axiosInstance } from '../../../../../utils/axios';
+import { axiosInstance } from '@/utils/axios';
 import { Region } from '@/utils/schemas'; // There is pagination? I'll let standard array return if not.
-import { pagination } from '@/utils/schema'; // If it uses schema.ts still from elsewhere, wait, I can just use generic standard.
+import { pagination } from '@/utils/schemas'; // If it uses schema.ts still from elsewhere, wait, I can just use generic standard.
 
 export const fetchRegions = async (params = {}): Promise<{
     data: Region[],

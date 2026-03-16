@@ -8,7 +8,7 @@ import {
     updateTitle
 } from '../api';
 import { titleKeys } from '../keys';
-import { JobTitle } from '@/utils/schema';
+import { JobTitle } from '@/utils/schemas';
 
 // 1. Hook for fetching all Titles
 export const useTitles = (filters = {}) => {

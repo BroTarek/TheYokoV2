@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useApplicants } from '@/features/applicants/hooks'
-import { Applicant } from '@/utils/schema'
+import { Applicant } from '@/utils/schemas'
 import React from 'react'
 
 const TabsController = () => {

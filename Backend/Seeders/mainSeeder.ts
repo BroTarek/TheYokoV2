@@ -44,22 +44,30 @@ async function main() {
     console.log('🌱 Starting full database seed...');
 
     try {
-        // 1. Clear all tables in correct order
+        // 1. Clear all tables in correct order (safe: skip if tables don't exist yet)
         console.log('🧹 Clearing existing data...');
-        await db.execute(sql`TRUNCATE TABLE 
-      "applicant_region", 
-      "job_requirement_region", 
-      "job_requirement_applicant", 
-      "applicant", 
-      "job_requirement", 
-      "job_title", 
-      "job_field", 
-      "referral_source", 
-      "region", 
-      "company", 
-      "archive_log" 
-      RESTART IDENTITY CASCADE`);
-        console.log('✅ Tables cleared.');
+        try {
+            await db.execute(sql`TRUNCATE TABLE 
+          "applicant_region", 
+          "job_requirement_region", 
+          "job_requirement_applicant", 
+          "applicant", 
+          "job_requirement", 
+          "job_title", 
+          "job_field", 
+          "referral_source", 
+          "region", 
+          "company", 
+          "archive_log" 
+          RESTART IDENTITY CASCADE`);
+            console.log('✅ Tables cleared.');
+        } catch (truncateErr: any) {
+            if (truncateErr?.code === '42P01') {
+                console.log('ℹ️  Tables are freshly created — skipping TRUNCATE.');
+            } else {
+                throw truncateErr;
+            }
+        }
 
         // 2. Seed Job Fields
         console.log('📂 Seeding job fields...');

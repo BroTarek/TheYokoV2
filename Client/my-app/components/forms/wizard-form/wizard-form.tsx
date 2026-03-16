@@ -64,7 +64,7 @@ export function WizardForm() {
             jobFieldId: selectedFieldId,
             jobTitleId: selectedPosition,
             referralSourceId: referralSource,
-            desiredRegionIds: selectedCountries,
+            regions: selectedCountries,
             status: 'unseen',
             experienceDescription,
             googleDriveUrl,

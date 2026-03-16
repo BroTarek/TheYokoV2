@@ -3,7 +3,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { flexRender } from "@tanstack/react-table"
 import { TableCell, TableRow } from "@/components/ui/table"
-import { SelectedRegions } from '@/app/dashboard/(component)/SelectedRegions'
+
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -18,7 +18,6 @@ import { FIELD_CONFIG, STATUS_CONFIG } from './Configs'
 import { useEffect } from 'react'
 
 
-const {  dataTable } = useDataTable();
 export const SelectAllHeaderCell = ({ row }: { row: Row<Applicant> }) => {
     return (
         <>
@@ -43,18 +42,10 @@ export const NameCell = ({ row }: { row: Row<Applicant> }) => {
     )
 }
 
-export const JobFieldCell = ({ row }: { row: Row<Applicant> }) => {
-    const { jobFieldByIdGetter, dataTable } = useDataTable();
+export const JobFieldCell = ({ row }: { row: Row<any> }) => {
     const applicant = row.original;
-
-    // Call the getter at the top level (inside useEffect or as a separate call)
-    useEffect(() => {
-        if (applicant.jobField) {
-            jobFieldByIdGetter(applicant.jobField.id);
-        }
-    }, [applicant.jobField, jobFieldByIdGetter]);
-    const field = dataTable.jobField?.name
-    const config = FIELD_CONFIG[field as keyof typeof FIELD_CONFIG]
+    const field = applicant.jobField?.name;
+    const config = FIELD_CONFIG[field as keyof typeof FIELD_CONFIG];
 
     if (!config) {
         return (
@@ -83,22 +74,12 @@ export const JobFieldCell = ({ row }: { row: Row<Applicant> }) => {
 
 
 
-export const JobTitleCell = ({ row }: { row: Row<Applicant> }) => {
-    const { jobFieldByIdGetter, dataTable } = useDataTable();
+export const JobTitleCell = ({ row }: { row: Row<any> }) => {
     const applicant = row.original;
-
-    // Call the getter at the top level (inside useEffect or as a separate call)
-    useEffect(() => {
-        if (applicant.jobTitle) {
-            jobFieldByIdGetter(applicant.jobTitle.id);
-        }
-    }, [applicant.jobTitle, jobFieldByIdGetter]);
-
-    // Access the data from the store
     return (
         <div className="w-32">
             <Badge variant="outline" className="px-2">
-                {dataTable.jobField?.name || dataTable.jobTitle?.title || "N/A"}
+                {applicant.jobTitle?.title || "N/A"}
             </Badge>
         </div>
     );
@@ -113,7 +94,7 @@ export const StatusCell = ({ row }: { row: Row<Applicant> }) => {
     return (
         <Select
             value={status}
-            onValueChange={(value: Applicant["status"]) => StatusChange(row.original.id, value)}
+            onValueChange={(value: string) => StatusChange(row.original.id, value as Applicant["status"])}
             disabled={dataTable.isUpdatingStatus}
         >
             <SelectTrigger className={`h-8 border-none shadow-none focus:ring-0 px-2 w-fit ${config.color}`}>
@@ -145,20 +126,24 @@ export const ExperienceCell = ({ row }: { row: Row<Applicant> }) => {
     )
 }
 
-export const RegionsCell = ({ row }: { row: Row<Applicant> }) => {
+export const RegionsCell = ({ row }: { row: Row<any> }) => {
     return (
-
-        <div className="min-w-50">
-            <SelectedRegions
-                value={[]}
-                onChange={(value: any) => console.log(value)}
-            />
+        <div className="flex flex-wrap gap-1 min-w-50">
+            {row.original.regions?.length > 0 ? (
+                row.original.regions.map((r: any) => (
+                    <Badge variant="secondary" key={r.id}>
+                        {r.name || r.code}
+                    </Badge>
+                ))
+            ) : (
+                <span className="text-gray-400 text-sm">N/A</span>
+            )}
         </div>
     )
 }
 
 export const ActionsCell = ({ row }: { row: Row<Applicant> }) => {
-    const { DeleteUser, ArchiveToggle } = useDataTable()
+    const { DeleteUser, ArchiveToggle, dataTable } = useDataTable()
     const applicant = row.original
     return (
         <div className="flex items-center gap-2">

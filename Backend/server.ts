@@ -28,6 +28,18 @@ app.use((req, res) => {
     res.status(404).json({ message: `Route ${req.originalUrl} not found` });
 });
 
+// Global error handler
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error("GLOBAL ERROR:", err);
+    res.status(500).json({
+        message: err.message,
+        detail: err.detail,
+        code: err.code,
+        stack: err.stack,
+        postgresError: err
+    });
+});
+
 app.listen(port, () => {
     console.log(`🚀 Recruitment Agency Backend running on port ${port}`);
 });

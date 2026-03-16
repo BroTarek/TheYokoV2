@@ -47,13 +47,13 @@ export function PositionSelect({
 
     // Helper function to get position title by ID
     const getPositionTitleById = (id: string) => {
-        const position = data?.find(p => p._id === id);
-        return position?._title || id; // Fallback to ID if position not found
+        const position = data?.find((p:any) => p.id === id);
+        return position?.title || position?.name || id; // Fallback to ID if position not found
     };
 
     // Helper function to get position by title
     const getPositionByTitle = (title: string) => {
-        return data?.find(p => p._title.toLowerCase() === title.toLowerCase());
+        return data?.find((p:any) => (p.title || p.name || "").toLowerCase() === title.toLowerCase());
     };
 
     // Get the display value (title) from the stored ID
@@ -103,13 +103,13 @@ export function PositionSelect({
     };
 
     const filteredPositions = React.useMemo(() =>
-        data?.filter((position) =>
-            position._title.toLowerCase().includes(search.toLowerCase())
+        data?.filter((position:any) =>
+            (position.title || position.name || "").toLowerCase().includes(search.toLowerCase())
         ), [data, search]);
 
     const hasExactMatch = React.useMemo(() =>
         data?.some(
-            (position) => position._title.toLowerCase() === search.toLowerCase()
+            (position:any) => (position.title || position.name || "").toLowerCase() === search.toLowerCase()
         ), [data, search]);
 
     return (
@@ -233,13 +233,14 @@ export function PositionSelect({
 
                                 {!isLoading && filteredPositions && filteredPositions.length > 0 && (
                                     <CommandGroup>
-                                        {filteredPositions.map((position) => {
-                                            const isSelected = value === position._id; // Compare with ID
+                                        {filteredPositions.map((position:any) => {
+                                            const isSelected = value === position.id; // Compare with ID
+                                            const displayTitle = position.title || position.name || "";
                                             return (
                                                 <CommandItem
-                                                    key={position._id}
-                                                    value={position._title} // Use title for search
-                                                    onSelect={() => handleSelect(position._id)} // Pass ID
+                                                    key={position.id}
+                                                    value={displayTitle} // Use title for search
+                                                    onSelect={() => handleSelect(position.id)} // Pass ID
                                                     className="cursor-pointer py-2.5 px-3 aria-selected:bg-red-50 aria-selected:text-vivid-red"
                                                 >
                                                     <div className="flex items-center justify-between w-full">
@@ -257,7 +258,7 @@ export function PositionSelect({
                                                                 )}
                                                             </div>
                                                             <span className="text-sm font-medium text-primary-text">
-                                                                {position._title}
+                                                                {displayTitle}
                                                             </span>
                                                         </div>
                                                     </div>

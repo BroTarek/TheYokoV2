@@ -6,6 +6,7 @@ export const fetchFields = async (params = {}): Promise<{
     pagination: pagination
 }> => {
     const { data } = await axiosInstance.get('/fields', { params });
+    console.log(data);
     return data;
 };
 

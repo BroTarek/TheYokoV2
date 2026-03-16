@@ -10,3 +10,4 @@ export * from './JobTitle';
 export * from './ReferralSource';
 export * from './Region';
 export * from './JobRequirementApplicant';
+export * from './Relations';

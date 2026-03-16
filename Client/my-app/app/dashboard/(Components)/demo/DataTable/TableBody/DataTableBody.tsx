@@ -1,4 +1,4 @@
-import { createReactTable } from '../TableUtils/createReactTable'
+import { useCreateReactTable } from '../TableUtils/createReactTable'
 import { Applicant, pagination } from '@/utils/schemas';
 import {
     Tabs,
@@ -24,7 +24,7 @@ const DataTableBody = ({ applicant, pagination }: { applicant: Applicant[]; pagi
         [applicant]
     )
     
-    const table = createReactTable({ Applicants: applicant, pagination })
+    const table = useCreateReactTable({ Applicants: applicant, pagination })
 
     return (
         <Tabs

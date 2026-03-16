@@ -1,6 +1,6 @@
 import { useReactTable } from '@tanstack/react-table'
 import { createColumnsFactory } from '../TableColumns/ColumnsFactory'
-import { Applicant, pagination } from '@/utils/schema'
+import { Applicant, pagination } from '@/utils/schemas'
 import { useReactTableUtils } from './useReactTableUtils'
 
 type createReactTableProps = {
@@ -8,7 +8,7 @@ type createReactTableProps = {
     pagination: pagination
 }
 
-export const createReactTable = ({ Applicants, pagination }: createReactTableProps) => {
+export const useCreateReactTable = ({ Applicants, pagination }: createReactTableProps) => {
     const { getters, on, states, values } = useReactTableUtils(pagination)   
     
     return useReactTable<Applicant>({

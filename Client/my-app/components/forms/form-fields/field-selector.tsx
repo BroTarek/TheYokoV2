@@ -77,10 +77,10 @@ export function FieldSelector({
       try {
         setLoading(true);
         const res = await fetch('http://localhost:3000/api/fields');
-        const data = await res.json();
-        const fields: Field[] = data.fields;
+        const responseData = await res.json();
+        const fieldsArray: Field[] = responseData.data || responseData.fields || [];
         
-        const mappedFields: FieldAttr[] = data.fields.map((field: Field) => ({
+        const mappedFields: FieldAttr[] = fieldsArray.map((field: Field) => ({
           fieldData: field,
           category: field.name.split(' ')[0],
           icon: STATIC_ICON_MAP[field.name] || <LayoutGrid className="w-6 h-6" />,

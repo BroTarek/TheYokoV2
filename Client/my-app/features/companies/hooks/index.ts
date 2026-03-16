@@ -9,7 +9,7 @@ import {
     deleteCompany
 } from '../api';
 import { companyKeys } from '../keys';
-import { Company } from '../../../../../utils/schema';
+import { Company } from '@/utils/schemas';
 
 // 1. Hook for fetching all companies
 export const useCompanies = (filters: any = {}) => {

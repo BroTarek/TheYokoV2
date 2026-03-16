@@ -1,10 +1,10 @@
 import { get, post, patch, del, put } from './request';
 import { z } from 'zod';
-import { Company, CompanySchema, pagination } from '@/utils/schemas';
+import { Company, CompanySchema, PaginationSchema } from '@/utils/schemas';
 
 const CompaniesResponseSchema = z.object({
     data: z.array(CompanySchema),
-    pagination: pagination
+    pagination: PaginationSchema
 });
 
 const CompanyDetailResponseSchema = z.object({
@@ -15,7 +15,9 @@ const CompanyDetailResponseSchema = z.object({
 // But looking at CompanyRepository, getById returns { data: companyObject }
 
 export const fetchCompanies = async (filters = {}) => {
-    return await get<z.infer<typeof CompaniesResponseSchema>>('/companies', CompaniesResponseSchema, filters);
+    const response = await get<z.infer<typeof CompaniesResponseSchema>>('/companies', CompaniesResponseSchema, filters);
+    console.log(response)
+    return { companies: response.data, pagination: response.pagination };
 };
 
 export const fetchCompanyById = async (id: string) => {
