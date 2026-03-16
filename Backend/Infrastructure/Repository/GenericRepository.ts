@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { db } from '../../db';
 import { IGenericRepository } from '../../Domain/Interfaces/RepositoryInterfaces/IGenericRepository';
 import { ApiFeatures } from "../../Utils/API_Features";

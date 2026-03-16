@@ -2,7 +2,7 @@
 
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
-import * as schema from '../models/schema';
+import * as schema from '../../Domain/Schemas/index';
 
 // --------------------
 // Region Validations

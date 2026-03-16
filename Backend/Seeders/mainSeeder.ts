@@ -90,7 +90,7 @@ async function main() {
 
         // 3. Seed Job Titles (dynamically linked to inserted fields)
         console.log('🏷️ Seeding job titles...');
-        const titlesData = [];
+        const titlesData: any[] = [];
 
         // Helper to find field ID by name
         const getFieldId = (name: string) => insertedFields.find(f => f.name === name)?.id;
