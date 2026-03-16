@@ -20,7 +20,8 @@ export default function ApplicantsArchivePage() {
     const fetchData = async () => {
         try {
             setLoading(true)
-            const response = await fetch('http://localhost:3000/api/applicant/filter/advanced?isArchived=true')
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+            const response = await fetch(`${baseUrl}/applicants?isArchived=true`)
             const jsonData = await response.json()
             setData(jsonData.applicants)
         } catch (error) {

@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Code2, Database, Wrench, Palette, Megaphone, TrendingUp, LayoutGrid, Users } from 'lucide-react';
+import { fetchFields } from '@/features/fields/api';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -76,9 +77,8 @@ export function FieldSelector({
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await fetch('http://localhost:3000/api/fields');
-        const responseData = await res.json();
-        const fieldsArray: Field[] = responseData.data || responseData.fields || [];
+        const responseData = await fetchFields();
+        const fieldsArray: Field[] = responseData.data || [];
         
         const mappedFields: FieldAttr[] = fieldsArray.map((field: Field) => ({
           fieldData: field,
