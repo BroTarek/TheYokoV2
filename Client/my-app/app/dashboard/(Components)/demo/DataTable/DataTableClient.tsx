@@ -8,27 +8,14 @@ import { useMemo } from 'react';
 function DataTableContent() {
     const { dataTableOperations } = useOperations();
     
-    // Convert Redux state to ApplicantParams
+    // Fetch all records for client-side operations
     const filters = useMemo(() => {
         const params: any = {
-            page: dataTableOperations.pagination.pageIndex + 1,
-            limit: dataTableOperations.pagination.pageSize,
+            page: 1,
+            limit: 10000, // Large limit to fetch all data
         };
 
-        // Add filters
-        dataTableOperations.columnFilters.forEach(filter => {
-            if (filter.id === 'jobField') params.jobFieldId = filter.value;
-            if (filter.id === 'yearsOfExperience') params.yearsOfExperience = filter.value;
-            // Add status if needed, though activeTab might handle part of it
-        });
-
-        // Add sorting
-        if (dataTableOperations.sorting.length > 0) {
-            const sort = dataTableOperations.sorting[0];
-            params.sort = `${sort.id}:${sort.desc ? 'desc' : 'asc'}`;
-        }
-
-        // Handle Active Tab (Archived vs Outline)
+        // We only fetch based on archive status, everything else happens on client
         if (dataTableOperations.activeTab === 'archived') {
             params.isArchived = true;
         } else {
@@ -36,7 +23,7 @@ function DataTableContent() {
         }
 
         return params;
-    }, [dataTableOperations]);
+    }, [dataTableOperations.activeTab]);
 
     const { data, error, isFetching, isLoading } = useApplicants(filters);
     

@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge'
 import { useCompanies, useCompany } from '@/features/companies/hooks'
 import { useApplicants } from '@/features/applicants/hooks'
 import { useFields } from '@/features/fields/hooks'
+import { useJobRequirements } from '@/features/jobRequirments/hooks'
 
 const COLORS = ['#BC002D', '#365AD6', '#181B31', '#8A8A91', '#ff6900', '#9b51e0']
 
@@ -53,7 +54,13 @@ const CompanyDetailPage = () => {
 
     const { data: applicantsResponse, isLoading: applicantsLoading } = useApplicants(queryParams)
 
+    const { data: jobRequirementsResponse, isPending: jobReqsLoading } = useJobRequirements({
+        companyId: companyId || undefined,
+        jobFieldId: fieldId || undefined
+    })
+
     const applicants = applicantsResponse?.applicants || []
+    const jobRequirements = jobRequirementsResponse?.data || []
     const meta = applicantsResponse?.pagination
 
     // Sync pagination state from server
@@ -64,7 +71,7 @@ const CompanyDetailPage = () => {
         }
     }, [meta])
 
-    const finalLoading = companiesLoading || detailsLoading || applicantsLoading
+    const finalLoading = companiesLoading || detailsLoading || applicantsLoading || jobReqsLoading
 
     // Process Data for Referral Resources
     const referralData = useMemo(() => {
@@ -214,6 +221,84 @@ const CompanyDetailPage = () => {
                     <p className="text-gray-500 max-w-sm mx-auto">We haven't received any submissions for {companyName} in the {topicName} field yet.</p>
                 </div>
             )}
+
+            <section className="space-y-6">
+                <div className="flex items-center justify-between px-4">
+                    <h2 className="text-2xl font-bold text-[#1c213e] font-space-grotesk flex items-center gap-3">
+                        <Briefcase className="w-7 h-7 text-kaizen-red" />
+                        Job Requirements
+                        <span className="text-sm font-medium text-secondary-grey bg-gray-50 px-3 py-1 rounded-lg border border-gray-100">
+                            {jobRequirements.length} Positions
+                        </span>
+                    </h2>
+                </div>
+
+                {jobRequirements.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {jobRequirements.map((req: any) => (
+                            <Card key={req.id} className="rounded-[32px] border-gray-100 shadow-xl shadow-gray-100/30 hover:shadow-2xl hover:shadow-gray-200/50 transition-all duration-500 overflow-hidden group">
+                                <div className="p-1 px-5 pt-5">
+                                     <div className="flex justify-between items-start mb-4">
+                                        <div className="space-y-1">
+                                            <h3 className="text-xl font-bold text-[#1c213e] group-hover:text-kaizen-red transition-colors">
+                                                {req.jobTitle?.title || req.jobTitle?.name || 'Position'}
+                                            </h3>
+                                            <p className="text-sm text-gray-500 font-medium">{req.jobField?.name || topicName}</p>
+                                        </div>
+                                        <Badge className="bg-gray-100 text-gray-600 hover:bg-gray-200 border-none rounded-full px-3">
+                                            {req.jobNature}
+                                        </Badge>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4 mb-6">
+                                        <div className="bg-gray-50 p-3 rounded-2xl">
+                                            <p className="text-[10px] text-gray-400 font-black uppercase mb-1">Experience</p>
+                                            <p className="text-sm font-bold text-[#1c213e]">{req.yearsOfExperience} Years</p>
+                                        </div>
+                                        <div className="bg-gray-50 p-3 rounded-2xl">
+                                            <p className="text-[10px] text-gray-400 font-black uppercase mb-1">Headcount</p>
+                                            <p className="text-sm font-bold text-[#1c213e]">{req.numberOfApplicantsNeeded} Needed</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <div className="flex items-center justify-between text-sm">
+                                            <span className="text-gray-500 font-medium">Progress</span>
+                                            <span className="font-bold text-kaizen-red">{Math.round(((req.numberOfApplicantsSelected || 0) / req.numberOfApplicantsNeeded) * 100)}%</span>
+                                        </div>
+                                        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div 
+                                                className="h-full bg-kaizen-red rounded-full transition-all duration-1000" 
+                                                style={{ width: `${Math.min(100, ((req.numberOfApplicantsSelected || 0) / req.numberOfApplicantsNeeded) * 100)}%` }} 
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-6 p-4 bg-gray-50/50 border-t border-gray-50 flex items-center justify-between">
+                                    <div className="flex -space-x-2">
+                                        {[1, 2, 3].map((i) => (
+                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center overflow-hidden">
+                                                <Users className="w-4 h-4 text-gray-400" />
+                                            </div>
+                                        ))}
+                                        <div className="w-8 h-8 rounded-full border-2 border-white bg-white flex items-center justify-center text-[10px] font-bold text-gray-400">
+                                            +{req.numberOfApplicantsSelected || 0}
+                                        </div>
+                                    </div>
+                                    <Button variant="ghost" size="sm" className="text-kaizen-red font-bold hover:bg-kaizen-red/10 rounded-full">
+                                        View Applicants
+                                    </Button>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="bg-white rounded-[40px] p-12 text-center border border-dashed border-gray-200 space-y-3">
+                        <Briefcase className="w-10 h-10 text-gray-300 mx-auto" />
+                        <p className="text-gray-500 font-medium">No specific job requirements listed yet.</p>
+                    </div>
+                )}
+            </section>
 
             <main className="space-y-6">
                 <div className="flex items-center justify-between px-4">

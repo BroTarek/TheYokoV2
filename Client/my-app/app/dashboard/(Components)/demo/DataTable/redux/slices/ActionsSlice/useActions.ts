@@ -1,4 +1,3 @@
-// hooks/useTodos.ts
 import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../reduxHooks';
 import {
@@ -7,6 +6,7 @@ import {
   getjobTitleById, dataTableSlice, onArchiveToggle, onDeleteClick, onStatusChange
 } from './ActionsSlice';
 import { Applicant } from '@/utils/schemas';
+import { useArchiveApplicant, useUnarchiveApplicant } from '@/features/applicants/hooks';
 
 interface UseTodosOptions {
   autoFetch?: boolean;
@@ -22,20 +22,20 @@ export const useDataTable = (options: UseTodosOptions = {}) => {
   } = options;
 
   const dispatch = useAppDispatch();
-
   const dataTable = useAppSelector(selectDataTable);
-
-  // useEffect(() => {
-  //   if (autoFetch) {
-  //     dispatch(fetchTodos({ page: initialPage, limit: initialLimit }));
-  //   }
-  // }, [dispatch, autoFetch, initialPage, initialLimit]);
+  
+  const { mutate: archiveMutate, isPending: isArchiving } = useArchiveApplicant();
+  const { mutate: unarchiveMutate, isPending: isUnarchiving } = useUnarchiveApplicant();
 
   const ArchiveToggle = useCallback(
     async ({ currentlyArchived, id }: { currentlyArchived: boolean, id: string }) => {
-      const result = dispatch(onArchiveToggle({ currentlyArchived, id }));
+      if (currentlyArchived) {
+        unarchiveMutate(id);
+      } else {
+        archiveMutate(id);
+      }
     },
-    [dispatch]
+    [archiveMutate, unarchiveMutate]
   );
 
   const StatusChange = useCallback(
@@ -52,32 +52,13 @@ export const useDataTable = (options: UseTodosOptions = {}) => {
     [dispatch]
   );
 
-  // const resetFilters = useCallback(() => {
-  //   dispatch(clearFilters());
-  // }, [dispatch]);
-
-  // const selectTodo = useCallback(
-  //   (todo: Todo | null) => {
-  //     dispatch(setSelectedTodo(todo));
-  //   },
-  //   [dispatch]
-  // );
-
-  // const changePage = useCallback(
-  //   (page: number) => {
-  //     dispatch(setPage(page));
-  //     dispatch(fetchTodos({ page, limit: pagination.limit }));
-  //   },
-  //   [dispatch, pagination.limit]
-  // );
-
-  // const refreshTodos = useCallback(() => {
-  //   dispatch(fetchTodos({ page: pagination.page, limit: pagination.limit }));
-  // }, [dispatch, pagination.page, pagination.limit]);
-
   return {
-    dataTable,
+    dataTable: {
+        ...dataTable,
+        isArchiveTogglePending: isArchiving || isUnarchiving
+    },
     ArchiveToggle,
-    DeleteUser, StatusChange,
+    DeleteUser, 
+    StatusChange,
   };
 };

@@ -161,11 +161,9 @@ export const ActionsCell = ({ row }: { row: Row<Applicant> }) => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-32">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
                     <DropdownMenuItem>
                         <Link href={`/Portofolio?id=${row.original.id}`}>Applicant Page</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Favorite</DropdownMenuItem>
                     <DropdownMenuItem
                         onClick={() => ArchiveToggle({ currentlyArchived: !!row.original.isArchived, id: applicant.id })}
                         disabled={dataTable.isArchiveTogglePending}

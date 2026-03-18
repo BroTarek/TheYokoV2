@@ -32,12 +32,15 @@ export const useReactTableUtils=(meta?: pagination)=>{
      getSortedRowModel:     getSortedRowModel<Applicant>(),
      getFacetedRowModel:    getFacetedRowModel<Applicant>(),
      getFacetedUniqueValues:getFacetedUniqueValues<Applicant>(),
+
+     
+     
  })
   const values = () => ({
-     manualPagination: true,
+     manualPagination: false,
      pageCount: meta?.numberOfPages ?? -1,
-     manualSorting: true,
-     manualFiltering: true,
+     manualSorting: false,
+     manualFiltering: false,
      enableRowSelection: true,
  })
  return {
@@ -46,4 +49,4 @@ export const useReactTableUtils=(meta?: pagination)=>{
     getters,
     values,
  }
-}
+}

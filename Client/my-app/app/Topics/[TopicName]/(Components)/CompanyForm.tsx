@@ -17,7 +17,7 @@ interface CompanyFormProps {
     fieldId?: string
 }
 
-const CompanyForm = ({ topicName, availableJobs, onSubmit, loading, fieldId }: CompanyFormProps) => {
+const CompanyForm = ({ availableJobs, onSubmit, loading, fieldId }: CompanyFormProps) => {
     const [companyName, setCompanyName] = useState('')
     const [selectedRoles, setSelectedRoles] = useState<{
         jobTitleId: string,
@@ -27,7 +27,7 @@ const CompanyForm = ({ topicName, availableJobs, onSubmit, loading, fieldId }: C
         desiredRegionIds: string[]
     }[]>(() =>
         availableJobs.length > 0 ? [{
-            jobTitleId: availableJobs[0]._id,
+            jobTitleId: availableJobs[0].id,
             yearsOfExperience: '0-5',
             jobNature: 'fullTime',
             numberOfApplicantsNeeded: 1,
@@ -41,10 +41,10 @@ const CompanyForm = ({ topicName, availableJobs, onSubmit, loading, fieldId }: C
 
         // Build job requirements structure matching backend schema
         const jobRequirements = selectedRoles.map(role => {
-            const job = availableJobs.find(aj => aj._id === role.jobTitleId)
+            const job = availableJobs.find(aj => aj.id === role.jobTitleId)
             return {
                 jobTitleId: role.jobTitleId,
-                jobFieldId: job?._field?._id || fieldId,
+                jobFieldId: job?.field?.id || (job as any)?.fieldId || fieldId,
                 yearsOfExperience: role.yearsOfExperience,
                 jobNature: role.jobNature,
                 numberOfApplicantsNeeded: role.numberOfApplicantsNeeded || 1,

@@ -76,7 +76,54 @@ export const useArchiveApplicant = () => {
 
     return useMutation({
         mutationFn: archiveApplicant,
-        onSuccess: (data, variables) => {
+        // Optimistic update
+        onMutate: async (id) => {
+            // Cancel any outgoing refetches so they don't overwrite our optimistic update
+            await queryClient.cancelQueries({ queryKey: applicantKeys.lists() });
+            await queryClient.cancelQueries({ queryKey: applicantKeys.detail(id) });
+
+            // Snapshot the previous values
+            const previousLists = queryClient.getQueriesData({ queryKey: applicantKeys.lists() });
+            const previousDetail = queryClient.getQueryData(applicantKeys.detail(id));
+
+            // Optimistically update lists
+            queryClient.setQueriesData({ queryKey: applicantKeys.lists() }, (old: any) => {
+                if (!old || !old.applicants) return old;
+                
+                const exists = old.applicants.some((a: any) => a.id === id);
+                if (!exists) return old;
+
+                return {
+                    ...old,
+                    applicants: old.applicants.filter((a: any) => a.id !== id),
+                    pagination: {
+                        ...old.pagination,
+                        totalCount: Math.max(0, old.pagination.totalCount - 1)
+                    }
+                };
+            });
+
+            // Optimistically update detail
+            queryClient.setQueryData(applicantKeys.detail(id), (old: any) => {
+                if (!old) return old;
+                return { ...old, isArchived: true };
+            });
+
+            return { previousLists, previousDetail };
+        },
+        onError: (err, id, context: any) => {
+            // Rollback on error
+            if (context?.previousLists) {
+                context.previousLists.forEach(([queryKey, oldData]: [any, any]) => {
+                    queryClient.setQueryData(queryKey, oldData);
+                });
+            }
+            if (context?.previousDetail) {
+                queryClient.setQueryData(applicantKeys.detail(id), context.previousDetail);
+            }
+        },
+        onSettled: (data, error, variables) => {
+            // Always refetch after error or success
             queryClient.invalidateQueries({ queryKey: applicantKeys.detail(variables) });
             queryClient.invalidateQueries({ queryKey: applicantKeys.lists() });
         },
@@ -89,7 +136,49 @@ export const useUnarchiveApplicant = () => {
 
     return useMutation({
         mutationFn: unarchiveApplicant,
-        onSuccess: (data, variables) => {
+        // Optimistic update
+        onMutate: async (id) => {
+            await queryClient.cancelQueries({ queryKey: applicantKeys.lists() });
+            await queryClient.cancelQueries({ queryKey: applicantKeys.detail(id) });
+
+            const previousLists = queryClient.getQueriesData({ queryKey: applicantKeys.lists() });
+            const previousDetail = queryClient.getQueryData(applicantKeys.detail(id));
+
+            queryClient.setQueriesData({ queryKey: applicantKeys.lists() }, (old: any) => {
+                if (!old || !old.applicants) return old;
+                
+                const exists = old.applicants.some((a: any) => a.id === id);
+                if (!exists) return old;
+
+                return {
+                    ...old,
+                    applicants: old.applicants.filter((a: any) => a.id !== id),
+                    pagination: {
+                        ...old.pagination,
+                        totalCount: Math.max(0, old.pagination.totalCount - 1)
+                    }
+                };
+            });
+
+            queryClient.setQueryData(applicantKeys.detail(id), (old: any) => {
+                if (!old) return old;
+                return { ...old, isArchived: false };
+            });
+
+            return { previousLists, previousDetail };
+        },
+        onError: (err, id, context: any) => {
+            // Rollback on error
+            if (context?.previousLists) {
+                context.previousLists.forEach(([queryKey, oldData]: [any, any]) => {
+                    queryClient.setQueryData(queryKey, oldData);
+                });
+            }
+            if (context?.previousDetail) {
+                queryClient.setQueryData(applicantKeys.detail(id), context.previousDetail);
+            }
+        },
+        onSettled: (data, error, variables) => {
             queryClient.invalidateQueries({ queryKey: applicantKeys.detail(variables) });
             queryClient.invalidateQueries({ queryKey: applicantKeys.lists() });
         },

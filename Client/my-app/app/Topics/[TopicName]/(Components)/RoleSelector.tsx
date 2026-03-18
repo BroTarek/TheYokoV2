@@ -33,7 +33,7 @@ const RoleSelector = ({ availableJobs, selectedRoles, onRolesChange, loading }: 
     const filteredJobs = useMemo(() => {
         console.log(availableJobs)
         return availableJobs.filter((job: jobTitle) =>
-            job._title.toLowerCase().includes(search.toLowerCase())
+            job.title.toLowerCase().includes(search.toLowerCase())
         )
     }, [availableJobs, search])
 
@@ -100,12 +100,12 @@ const RoleSelector = ({ availableJobs, selectedRoles, onRolesChange, loading }: 
 
             <div className="grid grid-cols-1 gap-3">
                 {filteredJobs.map((job: jobTitle) => {
-                    const role = selectedRoles.find(r => r.jobTitleId === job._id)
+                    const role = selectedRoles.find(r => r.jobTitleId === job.id)
                     const isSelected = !!role
 
                     return (
                         <RoleItem
-                            key={job._id}
+                            key={job.id}
                             job={job}
                             isSelected={isSelected}
                             experience={role?.yearsOfExperience}

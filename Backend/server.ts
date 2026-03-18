@@ -9,7 +9,7 @@ import mountRoutes from './Routes/index';
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.use(cors({
     origin: ['https://the-yoko-v2-1a1o.vercel.app', 'http://localhost:3000', 'http://localhost:5173'],

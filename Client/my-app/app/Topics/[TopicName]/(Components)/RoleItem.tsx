@@ -12,13 +12,14 @@ import {
 } from "@/components/ui/select"
 
 type Field = {
-    _name: string,
-    _id: string
+    name: string,
+    id: string
 }
 type jobTitle = {
-    _id: string,
-    _title: string,
-    _field: Field
+    id: string,
+    title: string,
+    field?: Field,
+    fieldId?: string
 }
 interface RoleItemProps {
     job: jobTitle
@@ -79,17 +80,17 @@ const RoleItem = ({
         >
             <div className="flex items-center space-x-4">
                 <Checkbox
-                    id={`role-${job._id}`}
+                    id={`role-${job.id}`}
                     checked={isSelected}
-                    onCheckedChange={() => onToggle(job._id)}
+                    onCheckedChange={() => onToggle(job.id)}
                     className="border-gray-600 data-[state=checked]:bg-kaizen-red data-[state=checked]:border-kaizen-red rounded-lg w-6 h-6"
                     disabled={disabled}
                 />
                 <label
-                    htmlFor={`role-${job._id}`}
+                    htmlFor={`role-${job.id}`}
                     className="text-base font-bold cursor-pointer leading-tight flex-1 py-1"
                 >
-                    {job._title}
+                    {job.title}
                 </label>
             </div>
 
@@ -101,7 +102,7 @@ const RoleItem = ({
                         </span>
                         <Select
                             value={experience || '0-5'}
-                            onValueChange={(val) => onExperienceChange(job._id, val)}
+                            onValueChange={(val) => onExperienceChange(job.id, val)}
                             disabled={disabled}
                         >
                             <SelectTrigger className="h-10 bg-white/5 border-gray-800 rounded-xl text-xs font-bold w-35">
@@ -122,7 +123,7 @@ const RoleItem = ({
                         </span>
                         <Select
                             value={jobNature || 'fullTime'}
-                            onValueChange={(val) => onJobNatureChange(job._id, val)}
+                            onValueChange={(val) => onJobNatureChange(job.id, val)}
                             disabled={disabled}
                         >
                             <SelectTrigger className="h-10 bg-white/5 border-gray-800 rounded-xl text-xs font-bold flex-1">
@@ -146,7 +147,7 @@ const RoleItem = ({
                             type="number"
                             min={1}
                             value={numberOfApplicantsNeeded || 1}
-                            onChange={(e) => onApplicantsChange(job._id, parseInt(e.target.value) || 1)}
+                            onChange={(e) => onApplicantsChange(job.id, parseInt(e.target.value) || 1)}
                             disabled={disabled}
                             className="h-10 bg-white/5 border-gray-800 rounded-xl text-xs font-bold w-20"
                         />
@@ -158,7 +159,7 @@ const RoleItem = ({
                         </span>
                         <CountrySelect
                             value={desiredRegionIds || []}
-                            onChange={(vals) => onRegionsChange(job._id, vals)}
+                            onChange={(vals) => onRegionsChange(job.id, vals)}
                             placeholder="Select target regions..."
                             className="bg-white/5 border-gray-800 rounded-xl w-full"
                         />

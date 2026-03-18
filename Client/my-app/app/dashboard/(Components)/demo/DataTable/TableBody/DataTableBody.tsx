@@ -17,7 +17,7 @@ import MainTableContent from './TableBodyComponents/MainTableContent';
 
 const DataTableBody = ({ applicant, pagination }: { applicant: Applicant[]; pagination: pagination }) => {
     const { dataTableOperations, handleActiveTab } = useOperations()
-    const { dataTable } = useDataTable()
+    // const { dataTable } = useDataTable()
     
     const dataIds = useMemo<UniqueIdentifier[]>(
         () => applicant?.length === 0 ? [] : applicant?.map(({ id }) => id) || [],

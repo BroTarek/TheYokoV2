@@ -5,12 +5,12 @@ export const fetchJobRequirements = async (filters = {}): Promise<{
     data: JobRequirement[],
     pagination: pagination
 }> => {
-    const { data: { data, pagination } } = await axiosInstance.get('/job-requirements', { params: filters });
+    const { data: { data, pagination } } = await axiosInstance.get('/job-requirements', { params: { populate: true, ...filters } });
     return { data, pagination };
 };
 
 export const fetchJobRequirementById = async (id: string): Promise<JobRequirement> => {
-    const { data: { data } } = await axiosInstance.get(`/job-requirements/${id}`);
+    const { data: { data } } = await axiosInstance.get(`/job-requirements/${id}`, { params: { populate: true } });
     return data;
 };
 

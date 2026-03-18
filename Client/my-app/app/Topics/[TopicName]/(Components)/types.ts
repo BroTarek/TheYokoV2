@@ -1,11 +1,12 @@
 export type Field = {
-    _name: string,
-    _id: string
+    name: string,
+    id: string
 }
 export type jobTitle = {
-    _id: string,
-    _title: string,
-    _field: Field
+    id: string,
+    title: string,
+    field?: Field,
+    fieldId?: string
 }
 export interface CompanyFormProps {
     topicName: string

@@ -73,7 +73,7 @@ const AddCompanyDialog = ({
                         availableJobs={availableJobs}
                         onSubmit={handleSubmit}
                         loading={loading}
-                        fieldId={availableJobs[0]?._field?._id}
+                        fieldId={availableJobs[0]?.field?.id || (availableJobs[0] as any)?.fieldId}
                     />
                 </ScrollArea>
 

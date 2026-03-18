@@ -33,7 +33,7 @@ const ControlBar = ({ table }: ControlBarProps) => {
             const config = FIELD_CONFIG[field.name as keyof typeof FIELD_CONFIG];
             const Icon = config?.icon;
             return {
-                value: field.id,
+                value: field.name,
                 label: field.name,
                 icon: Icon ? <Icon className={`size-4 ${config.iconColor}`} /> : null,
             };
