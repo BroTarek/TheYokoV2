@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import { rateLimit } from "express-rate-limit";
 import dotenv from 'dotenv';
 
 import mountRoutes from './Routes/index';
@@ -19,6 +20,14 @@ app.use(cors({
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
+
+app.set('trust proxy', 1);
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  limit: 100,               // 100 requests per window per IP
+  standardHeaders: true,
+  legacyHeaders: false
+}));
 
 // API Routes
 mountRoutes(app);
