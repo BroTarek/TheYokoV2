@@ -1,5 +1,5 @@
 # Use Node 20 as base
-FROM node:20-slim
+FROM node:24.14.0-trixie-slim
 
 # Set working directory
 WORKDIR /app
@@ -14,7 +14,9 @@ RUN npm install
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 5000
+
+RUN ["npm", "run", "build"]
 
 # Start the application
 CMD ["npm", "run", "start"]
